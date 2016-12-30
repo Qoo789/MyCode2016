@@ -1,0 +1,233 @@
+//
+// Copyright 2009-2011 Facebook
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+#import "UIViewAdditions.h"
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Additions.
+ */
+//TT_FIX_CATEGORY_BUG(UIViewAdditions)
+
+@implementation UIView (TTCategory)
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_left {
+  return self.frame.origin.x;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)setPd_left:(CGFloat)x {
+    CGRect frame = self.frame;
+    frame.origin.x = x;
+    self.frame = frame;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_top {
+  return self.frame.origin.y;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_top:(CGFloat)y {
+  CGRect frame = self.frame;
+  frame.origin.y = y;
+  self.frame = frame;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_right {
+  return self.frame.origin.x + self.frame.size.width;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_right:(CGFloat)right {
+  CGRect frame = self.frame;
+  frame.origin.x = right - frame.size.width;
+  self.frame = frame;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_bottom {
+  return self.frame.origin.y + self.frame.size.height;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_bottom:(CGFloat)bottom {
+  CGRect frame = self.frame;
+  frame.origin.y = bottom - frame.size.height;
+  self.frame = frame;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_centerX {
+  return self.center.x;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_centerX:(CGFloat)centerX {
+  self.center = CGPointMake(centerX, self.center.y);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_centerY {
+  return self.center.y;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_centerY:(CGFloat)centerY {
+  self.center = CGPointMake(self.center.x, centerY);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_width {
+  return self.frame.size.width;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_width:(CGFloat)width {
+  CGRect frame = self.frame;
+  frame.size.width = width;
+  self.frame = frame;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)pd_height {
+  return self.frame.size.height;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_height:(CGFloat)height {
+  CGRect frame = self.frame;
+  frame.size.height = height;
+  self.frame = frame;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)ttScreenX {
+  CGFloat x = 0.0f;
+  for (UIView* view = self; view; view = view.superview) {
+    x += view.pd_left;
+  }
+  return x;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)ttScreenY {
+  CGFloat y = 0.0f;
+  for (UIView* view = self; view; view = view.superview) {
+    y += view.pd_top;
+  }
+  return y;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)screenViewX {
+  CGFloat x = 0.0f;
+  for (UIView* view = self; view; view = view.superview) {
+      x += view.pd_left;
+
+    if ([view isKindOfClass:[UIScrollView class]]) {
+      UIScrollView* scrollView = (UIScrollView*)view;
+      x -= scrollView.contentOffset.x;
+    }
+  }
+
+  return x;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)screenViewY {
+  CGFloat y = 0;
+  for (UIView* view = self; view; view = view.superview) {
+    y += view.pd_top;
+
+    if ([view isKindOfClass:[UIScrollView class]]) {
+      UIScrollView* scrollView = (UIScrollView*)view;
+      y -= scrollView.contentOffset.y;
+    }
+  }
+  return y;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGRect)screenFrame {
+  return CGRectMake(self.screenViewX, self.screenViewY, self.pd_width, self.pd_height);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGPoint)pd_origin {
+  return self.frame.origin;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_origin:(CGPoint)origin {
+  CGRect frame = self.frame;
+  frame.origin = origin;
+  self.frame = frame;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGSize)pd_size {
+  return self.frame.size;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)setPd_size:(CGSize)size {
+  CGRect frame = self.frame;
+  frame.size = size;
+  self.frame = frame;
+}
+
+//CG_INLINE CGRect
+//CGRectMake1(CGFloat x, CGFloat y, CGFloat width, CGFloat height)
+//{
+//    AppDelegate *myDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//    CGRect rect;
+//    rect.origin.x = x * myDelegate.autoSizeScaleX; rect.origin.y = y * myDelegate.autoSizeScaleY;
+//    rect.size.width = width * myDelegate.autoSizeScaleX; rect.size.height = height * myDelegate.autoSizeScaleY;
+//    return rect;
+//}
+
+@end

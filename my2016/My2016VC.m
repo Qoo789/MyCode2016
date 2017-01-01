@@ -95,12 +95,12 @@
     
     
     // Separator
-    UIView *separator1 = [[UIView alloc] initWithFrame:CGRectMake(main1.pd_left * 3, 0, 90, 0.5)];
+    UIView *separator1 = [[UIView alloc] initWithFrame:CGRectMake(main1.pd_left * 3, 0, 90, 0.7)];
     separator1.backgroundColor = [UIColor whiteColor];
     separator1.pd_centerY = label.pd_centerY;
     [self.view addSubview:separator1];
     
-    UIView *separator2 = [[UIView alloc] initWithFrame:CGRectMake(self.view.pd_width - main1.pd_left * 3 - 90, 0, 90, 0.5)];
+    UIView *separator2 = [[UIView alloc] initWithFrame:CGRectMake(self.view.pd_width - main1.pd_left * 3 - 90, 0, 90, 0.7)];
     separator2.backgroundColor = [UIColor whiteColor];
     separator2.pd_centerY = label.pd_centerY;
     [self.view addSubview:separator2];
